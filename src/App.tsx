@@ -14,9 +14,10 @@ import OperatorAccountsPage from './pages/operator/OperatorAccountsPage'
 import OperatorClientsPage from './pages/operator/OperatorClientsPage'
 import OperatorCardsPage from './pages/operator/OperatorCardsPage'
 import OperatorTransactionsPage from './pages/operator/OperatorTransactionsPage'
+import OperatorLoginPage from './pages/operator/OperatorLoginPage'
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { isAuthenticated, loading } = useAuth()
+  const { isAuthenticated, user, loading } = useAuth()
   
   if (loading) {
     return <div className="min-h-screen bg-background-dark flex items-center justify-center">
@@ -26,6 +27,11 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
   
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />
+  }
+  
+  // Operators should not access user routes - redirect to operator login
+  if (user?.role === 'OPERATOR') {
+    return <Navigate to="/operator/login" replace />
   }
   
   return <>{children}</>
@@ -41,7 +47,7 @@ function OperatorProtectedRoute({ children }: { children: React.ReactNode }) {
   }
   
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace />
+    return <Navigate to="/operator/login" replace />
   }
   
   if (user?.role !== 'OPERATOR') {
@@ -57,6 +63,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/operator/login" element={<OperatorLoginPage />} />
         <Route path="/" element={
           <ProtectedRoute>
             <Layout />

@@ -8,7 +8,7 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  const { login } = useAuth()
+  const { login, logout } = useAuth()
   const navigate = useNavigate()
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -17,7 +17,14 @@ export default function LoginPage() {
     setLoading(true)
 
     try {
-      await login({ username, password })
+      const response = await login({ username, password })
+      if (response?.role === 'OPERATOR') {
+        // Operator trying to login from user login page - reject
+        logout()
+        setError('Invalid username or password')
+        return
+      }
+
       navigate('/')
     } catch (err) {
       setError('Invalid username or password')
@@ -168,7 +175,7 @@ export default function LoginPage() {
       </main>
 
       <footer className="w-full py-4 text-center border-t border-surface-highlight bg-background-dark">
-        <p className="text-xs text-gray-600">© 2024 SpringBank. All rights reserved.</p>
+        <p className="text-xs text-gray-600">© 2025 SpringBank. All rights reserved.</p>
       </footer>
     </div>
   )

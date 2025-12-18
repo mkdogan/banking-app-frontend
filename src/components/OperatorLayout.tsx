@@ -1,9 +1,10 @@
-import { Outlet, NavLink, useNavigate } from 'react-router-dom'
+import { Outlet, NavLink, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 
 export default function OperatorLayout() {
   const { user, logout } = useAuth()
   const navigate = useNavigate()
+  const location = useLocation()
 
   const handleLogout = () => {
     logout()
@@ -37,25 +38,30 @@ export default function OperatorLayout() {
 
             {/* Navigation */}
             <nav className="flex flex-col gap-1">
-              {navItems.map((item) => (
-                <NavLink
-                  key={item.path}
-                  to={item.path}
-                  end={item.path === '/operator'}
-                  className={({ isActive }) =>
-                    `flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${
-                      isActive
-                        ? 'bg-primary/10 text-primary dark:text-blue-400'
-                        : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'
-                    }`
-                  }
-                >
-                  <span className="material-symbols-outlined" style={{ fontVariationSettings: isActive ? "'FILL' 1" : "'FILL' 0" }}>
-                    {item.icon}
-                  </span>
-                  <span className="text-sm font-medium">{item.label}</span>
-                </NavLink>
-              ))}
+              {navItems.map((item) => {
+                const isItemActive = item.path === '/operator' 
+                  ? location.pathname === '/operator'
+                  : location.pathname.startsWith(item.path)
+                return (
+                  <NavLink
+                    key={item.path}
+                    to={item.path}
+                    end={item.path === '/operator'}
+                    className={() =>
+                      `flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${
+                        isItemActive
+                          ? 'bg-primary/10 text-primary dark:text-blue-400'
+                          : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'
+                      }`
+                    }
+                  >
+                    <span className="material-symbols-outlined" style={{ fontVariationSettings: isItemActive ? "'FILL' 1" : "'FILL' 0" }}>
+                      {item.icon}
+                    </span>
+                    <span className="text-sm font-medium">{item.label}</span>
+                  </NavLink>
+                )
+              })}
             </nav>
           </div>
 
@@ -100,7 +106,9 @@ export default function OperatorLayout() {
           </div>
         </header>
 
-        <Outlet />
+        <div className="flex-1 min-h-0 flex flex-col">
+          <Outlet />
+        </div>
       </main>
     </div>
   )
