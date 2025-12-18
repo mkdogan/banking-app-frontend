@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NeoBank - My Cards</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2bee79",
+                        "background-light": "#f6f8f7",
+                        "background-dark": "#112218",
+                        "surface-dark": "#193324",
+                        "surface-accent": "#234832",
+                        "text-secondary": "#92c9a8",
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans", "Noto Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "1.5rem", "xl": "2rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+        }
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #112218; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #234832; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2bee79; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display min-h-screen flex flex-col overflow-x-hidden text-slate-900 dark:text-white transition-colors duration-200">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-[#234832] bg-background-light/80 dark:bg-[#112218]/95 backdrop-blur-md px-4 sm:px-6 lg:px-10 py-3">
+<div class="flex items-center justify-between mx-auto max-w-[1200px]">
+<!-- Logo Section -->
+<div class="flex items-center gap-4 text-slate-900 dark:text-white">
+<div class="size-8 text-primary">
+<svg class="w-full h-full" fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M36.7273 44C33.9891 44 31.6043 39.8386 30.3636 33.69C29.123 39.8386 26.7382 44 24 44C21.2618 44 18.877 39.8386 17.6364 33.69C16.3957 39.8386 14.0109 44 11.2727 44C7.25611 44 4 35.0457 4 24C4 12.9543 7.25611 4 11.2727 4C14.0109 4 16.3957 8.16144 17.6364 14.31C18.877 8.16144 21.2618 4 24 4C26.7382 4 29.123 8.16144 30.3636 14.31C31.6043 8.16144 33.9891 4 36.7273 4C40.7439 4 44 12.9543 44 24C44 35.0457 40.7439 44 36.7273 44Z"></path>
+</svg>
+</div>
+<h2 class="text-xl font-bold leading-tight tracking-tight">NeoBank</h2>
+</div>
+<!-- User Actions -->
+<div class="flex items-center gap-4 sm:gap-6">
+<div class="hidden sm:flex gap-3">
+<button class="relative flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-gray-200 dark:bg-[#234832] text-slate-700 dark:text-white hover:bg-gray-300 dark:hover:bg-[#2bee79] dark:hover:text-[#112218] transition-all">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+<span class="absolute top-2 right-2 h-2 w-2 rounded-full bg-red-500"></span>
+</button>
+<button class="flex h-10 px-6 cursor-pointer items-center justify-center rounded-full bg-gray-200 dark:bg-[#234832] text-slate-700 dark:text-white text-sm font-bold hover:bg-red-100 hover:text-red-600 dark:hover:bg-red-500/20 dark:hover:text-red-400 transition-all">
+<span>Logout</span>
+</button>
+</div>
+<div class="h-10 w-10 rounded-full bg-center bg-cover border-2 border-primary" data-alt="User profile picture showing a smiling woman" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB3hUKL29AraX-Dqdor4epYhpd-EVQeV0EthHtS28IBeCGnV3kwXpPD9u4kxD5FAQR2ONIMxPFPgxwHUbSvC359uSUd4UtdKLx4_jj4dNCPrEuzyVZDNuZVxxVX2qIh6kkM60I_DeZxajPnQmKu4z3GXqUiNEJdxZO9ZoGeJrxtpY04VxvhGaJ1TPs1M0Z6cWBR0r4pDCUQnEE8uXuyWKMDzG-ujdu8GxB37DQPXHCRByotIgfo8xTvI0McVnqe5wdRBnQ3RLIkvp8');"></div>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-grow px-4 sm:px-6 lg:px-10 py-8 flex justify-center w-full">
+<div class="flex flex-col w-full max-w-[1200px] gap-8">
+<!-- Page Heading & Actions -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 pb-6 border-b border-gray-200 dark:border-[#234832]">
+<div class="flex flex-col gap-2">
+<h1 class="text-4xl md:text-5xl font-black tracking-tight text-slate-900 dark:text-white">My Cards</h1>
+<p class="text-slate-500 dark:text-text-secondary text-lg">Manage your digital wallet and card security</p>
+</div>
+<!-- OPERATOR Action Button (Prominent) -->
+<button class="group flex items-center justify-center gap-2 h-12 px-6 bg-primary hover:bg-primary/90 text-[#112218] rounded-full font-bold shadow-lg shadow-primary/20 transition-all transform hover:scale-105">
+<span class="material-symbols-outlined">add_card</span>
+<span>Issue New Card</span>
+</button>
+</div>
+<!-- Statistics Overview -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="flex flex-col gap-1 rounded-2xl p-6 bg-white dark:bg-surface-accent shadow-sm border border-gray-100 dark:border-none">
+<div class="flex items-center gap-2 text-slate-500 dark:text-text-secondary mb-2">
+<span class="material-symbols-outlined text-[20px]">credit_card</span>
+<span class="text-sm font-medium uppercase tracking-wider">Total Cards</span>
+</div>
+<p class="text-3xl font-bold text-slate-900 dark:text-white">5</p>
+</div>
+<div class="flex flex-col gap-1 rounded-2xl p-6 bg-white dark:bg-surface-accent shadow-sm border border-gray-100 dark:border-none">
+<div class="flex items-center gap-2 text-green-600 dark:text-primary mb-2">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+<span class="text-sm font-medium uppercase tracking-wider">Active</span>
+</div>
+<p class="text-3xl font-bold text-slate-900 dark:text-white">4</p>
+</div>
+<div class="flex flex-col gap-1 rounded-2xl p-6 bg-white dark:bg-surface-accent shadow-sm border border-gray-100 dark:border-none">
+<div class="flex items-center gap-2 text-red-500 mb-2">
+<span class="material-symbols-outlined text-[20px]">block</span>
+<span class="text-sm font-medium uppercase tracking-wider">Blocked</span>
+</div>
+<p class="text-3xl font-bold text-slate-900 dark:text-white">1</p>
+</div>
+<!-- Quick Filter / Search Tool -->
+<div class="flex flex-col justify-center gap-3 rounded-2xl p-4 bg-gray-50 dark:bg-surface-dark border border-dashed border-gray-300 dark:border-gray-600">
+<div class="relative w-full">
+<span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</span>
+<input class="w-full h-10 pl-10 pr-4 rounded-xl bg-white dark:bg-[#112218] border-none text-sm focus:ring-2 focus:ring-primary text-slate-900 dark:text-white placeholder-gray-400" placeholder="Find by last 4 digits..." type="text"/>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 h-8 rounded-lg bg-white dark:bg-[#112218] text-xs font-medium hover:bg-gray-100 dark:hover:bg-[#234832] transition-colors border border-gray-200 dark:border-transparent">Filter Status</button>
+<button class="flex-1 h-8 rounded-lg bg-white dark:bg-[#112218] text-xs font-medium hover:bg-gray-100 dark:hover:bg-[#234832] transition-colors border border-gray-200 dark:border-transparent">Sort Date</button>
+</div>
+</div>
+</section>
+<!-- Cards List Grid -->
+<section class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-6 pb-12">
+<!-- Card Item 1: Active Credit -->
+<div class="group relative flex flex-col sm:flex-row overflow-hidden rounded-[2rem] bg-white dark:bg-surface-dark shadow-md border border-gray-100 dark:border-transparent transition-transform hover:-translate-y-1 hover:shadow-xl dark:shadow-black/40">
+<!-- Left: Card Info -->
+<div class="flex-1 p-6 sm:p-8 flex flex-col justify-between gap-6 z-10">
+<div class="flex justify-between items-start">
+<div class="flex flex-col gap-1">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-green-100 dark:bg-primary/20 text-green-700 dark:text-primary text-xs font-bold uppercase tracking-wider w-fit">
+<span class="w-1.5 h-1.5 rounded-full bg-green-600 dark:bg-primary animate-pulse"></span>
+                                    Active
+                                </span>
+<h3 class="text-xl font-bold text-slate-900 dark:text-white mt-2">Visa Infinite</h3>
+<p class="text-slate-500 dark:text-text-secondary text-sm">Credit • Personal</p>
+</div>
+<!-- Action Menu -->
+<button class="p-2 -mr-2 text-slate-400 hover:text-slate-600 dark:hover:text-white rounded-full hover:bg-gray-100 dark:hover:bg-[#234832]">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<div class="flex flex-col gap-1">
+<p class="font-mono text-2xl tracking-widest text-slate-800 dark:text-gray-200">**** **** **** 4291</p>
+<div class="flex gap-4 text-sm text-slate-500 dark:text-text-secondary mt-1">
+<span>Expires <span class="text-slate-900 dark:text-white font-medium">12/28</span></span>
+<span>CVC <span class="text-slate-900 dark:text-white font-medium">***</span></span>
+</div>
+</div>
+<div class="flex gap-3 mt-2">
+<button class="flex-1 py-2.5 px-4 rounded-xl bg-gray-100 dark:bg-[#234832] text-slate-900 dark:text-white text-sm font-semibold hover:bg-gray-200 dark:hover:bg-[#2bee79] dark:hover:text-[#112218] transition-colors">
+                                View Details
+                            </button>
+<button class="p-2.5 rounded-xl border border-gray-200 dark:border-[#234832] text-slate-400 hover:text-red-500 hover:border-red-200 dark:hover:text-red-400 dark:hover:border-red-900 transition-colors" title="Block Card">
+<span class="material-symbols-outlined text-[20px]">lock</span>
+</button>
+</div>
+</div>
+<!-- Right: Visual Card Representation -->
+<div class="relative w-full sm:w-48 bg-gradient-to-br from-[#112218] to-[#1a3826] flex items-center justify-center p-6 sm:p-0 overflow-hidden">
+<!-- Abstract pattern overlay -->
+<div class="absolute inset-0 opacity-30" style="background-image: radial-gradient(#2bee79 1px, transparent 1px); background-size: 10px 10px;"></div>
+<div class="absolute -right-10 -bottom-10 w-40 h-40 bg-primary blur-[60px] opacity-20 rounded-full"></div>
+<!-- Card visual content -->
+<div class="relative z-10 w-full sm:w-auto h-48 sm:h-full flex flex-col justify-center items-center sm:items-start p-4 text-white/80">
+<div class="w-12 h-8 rounded bg-yellow-400/80 mb-4 bg-gradient-to-br from-yellow-200 to-yellow-600 shadow-inner"></div>
+<span class="font-mono text-lg opacity-50 select-none">VISA</span>
+</div>
+</div>
+</div>
+<!-- Card Item 2: Active Debit -->
+<div class="group relative flex flex-col sm:flex-row overflow-hidden rounded-[2rem] bg-white dark:bg-surface-dark shadow-md border border-gray-100 dark:border-transparent transition-transform hover:-translate-y-1 hover:shadow-xl dark:shadow-black/40">
+<div class="flex-1 p-6 sm:p-8 flex flex-col justify-between gap-6 z-10">
+<div class="flex justify-between items-start">
+<div class="flex flex-col gap-1">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-green-100 dark:bg-primary/20 text-green-700 dark:text-primary text-xs font-bold uppercase tracking-wider w-fit">
+<span class="w-1.5 h-1.5 rounded-full bg-green-600 dark:bg-primary animate-pulse"></span>
+                                    Active
+                                </span>
+<h3 class="text-xl font-bold text-slate-900 dark:text-white mt-2">Mastercard Gold</h3>
+<p class="text-slate-500 dark:text-text-secondary text-sm">Debit • Business</p>
+</div>
+<button class="p-2 -mr-2 text-slate-400 hover:text-slate-600 dark:hover:text-white rounded-full hover:bg-gray-100 dark:hover:bg-[#234832]">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<div class="flex flex-col gap-1">
+<p class="font-mono text-2xl tracking-widest text-slate-800 dark:text-gray-200">**** **** **** 8821</p>
+<div class="flex gap-4 text-sm text-slate-500 dark:text-text-secondary mt-1">
+<span>Expires <span class="text-slate-900 dark:text-white font-medium">09/26</span></span>
+<span>CVC <span class="text-slate-900 dark:text-white font-medium">***</span></span>
+</div>
+</div>
+<div class="flex gap-3 mt-2">
+<button class="flex-1 py-2.5 px-4 rounded-xl bg-gray-100 dark:bg-[#234832] text-slate-900 dark:text-white text-sm font-semibold hover:bg-gray-200 dark:hover:bg-[#2bee79] dark:hover:text-[#112218] transition-colors">
+                                View Details
+                            </button>
+<button class="p-2.5 rounded-xl border border-gray-200 dark:border-[#234832] text-slate-400 hover:text-red-500 hover:border-red-200 dark:hover:text-red-400 dark:hover:border-red-900 transition-colors" title="Block Card">
+<span class="material-symbols-outlined text-[20px]">lock</span>
+</button>
+</div>
+</div>
+<div class="relative w-full sm:w-48 bg-gradient-to-tl from-slate-800 to-slate-700 flex items-center justify-center p-6 sm:p-0 overflow-hidden">
+<div class="absolute -left-10 -top-10 w-40 h-40 bg-blue-500 blur-[50px] opacity-20 rounded-full"></div>
+<div class="relative z-10 w-full sm:w-auto h-48 sm:h-full flex flex-col justify-center items-center sm:items-start p-4 text-white/80">
+<div class="w-12 h-8 rounded bg-yellow-400/80 mb-4 bg-gradient-to-br from-yellow-200 to-yellow-600 shadow-inner"></div>
+<!-- Mastercard circles visual representation -->
+<div class="flex -space-x-3 opacity-60">
+<div class="w-8 h-8 rounded-full bg-red-500/80 mix-blend-screen"></div>
+<div class="w-8 h-8 rounded-full bg-yellow-500/80 mix-blend-screen"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Card Item 3: Active Debit -->
+<div class="group relative flex flex-col sm:flex-row overflow-hidden rounded-[2rem] bg-white dark:bg-surface-dark shadow-md border border-gray-100 dark:border-transparent transition-transform hover:-translate-y-1 hover:shadow-xl dark:shadow-black/40">
+<div class="flex-1 p-6 sm:p-8 flex flex-col justify-between gap-6 z-10">
+<div class="flex justify-between items-start">
+<div class="flex flex-col gap-1">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-green-100 dark:bg-primary/20 text-green-700 dark:text-primary text-xs font-bold uppercase tracking-wider w-fit">
+<span class="w-1.5 h-1.5 rounded-full bg-green-600 dark:bg-primary animate-pulse"></span>
+                                    Active
+                                </span>
+<h3 class="text-xl font-bold text-slate-900 dark:text-white mt-2">Visa Debit</h3>
+<p class="text-slate-500 dark:text-text-secondary text-sm">Debit • Personal</p>
+</div>
+<button class="p-2 -mr-2 text-slate-400 hover:text-slate-600 dark:hover:text-white rounded-full hover:bg-gray-100 dark:hover:bg-[#234832]">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<div class="flex flex-col gap-1">
+<p class="font-mono text-2xl tracking-widest text-slate-800 dark:text-gray-200">**** **** **** 1092</p>
+<div class="flex gap-4 text-sm text-slate-500 dark:text-text-secondary mt-1">
+<span>Expires <span class="text-slate-900 dark:text-white font-medium">01/25</span></span>
+<span>CVC <span class="text-slate-900 dark:text-white font-medium">***</span></span>
+</div>
+</div>
+<div class="flex gap-3 mt-2">
+<button class="flex-1 py-2.5 px-4 rounded-xl bg-gray-100 dark:bg-[#234832] text-slate-900 dark:text-white text-sm font-semibold hover:bg-gray-200 dark:hover:bg-[#2bee79] dark:hover:text-[#112218] transition-colors">
+                                View Details
+                            </button>
+<button class="p-2.5 rounded-xl border border-gray-200 dark:border-[#234832] text-slate-400 hover:text-red-500 hover:border-red-200 dark:hover:text-red-400 dark:hover:border-red-900 transition-colors" title="Block Card">
+<span class="material-symbols-outlined text-[20px]">lock</span>
+</button>
+</div>
+</div>
+<div class="relative w-full sm:w-48 bg-gradient-to-tr from-indigo-900 to-blue-800 flex items-center justify-center p-6 sm:p-0 overflow-hidden">
+<div class="absolute inset-0 opacity-20" style="background-image: linear-gradient(45deg, #000 25%, transparent 25%, transparent 50%, #000 50%, #000 75%, transparent 75%, transparent); background-size: 20px 20px;"></div>
+<div class="relative z-10 w-full sm:w-auto h-48 sm:h-full flex flex-col justify-center items-center sm:items-start p-4 text-white/80">
+<div class="w-12 h-8 rounded bg-yellow-400/80 mb-4 bg-gradient-to-br from-yellow-200 to-yellow-600 shadow-inner"></div>
+<span class="font-mono text-lg opacity-50 select-none">VISA</span>
+</div>
+</div>
+</div>
+<!-- Card Item 4: Blocked -->
+<div class="group relative flex flex-col sm:flex-row overflow-hidden rounded-[2rem] bg-gray-50 dark:bg-[#152a20] shadow-none border border-gray-200 dark:border-[#234832] opacity-80 hover:opacity-100 transition-all">
+<div class="flex-1 p-6 sm:p-8 flex flex-col justify-between gap-6 z-10">
+<div class="flex justify-between items-start">
+<div class="flex flex-col gap-1">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-400 text-xs font-bold uppercase tracking-wider w-fit">
+<span class="material-symbols-outlined text-[14px]">block</span>
+                                    Blocked
+                                </span>
+<h3 class="text-xl font-bold text-slate-700 dark:text-gray-300 mt-2">Virtual Shopper</h3>
+<p class="text-slate-400 dark:text-gray-500 text-sm">Credit • Virtual</p>
+</div>
+<button class="p-2 -mr-2 text-slate-400 hover:text-slate-600 dark:hover:text-white rounded-full hover:bg-gray-100 dark:hover:bg-[#234832]">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<div class="flex flex-col gap-1">
+<p class="font-mono text-2xl tracking-widest text-slate-400 dark:text-gray-500 line-through">**** **** **** 9912</p>
+<div class="flex gap-4 text-sm text-slate-400 dark:text-gray-500 mt-1">
+<span>Expires <span class="text-slate-500 dark:text-gray-400 font-medium">06/24</span></span>
+</div>
+</div>
+<div class="flex gap-3 mt-2">
+<button class="flex-1 py-2.5 px-4 rounded-xl border border-gray-200 dark:border-[#234832] text-slate-600 dark:text-gray-300 text-sm font-semibold hover:bg-gray-100 dark:hover:bg-[#234832] transition-colors">
+                                Unblock
+                            </button>
+<button class="p-2.5 rounded-xl border border-gray-200 dark:border-[#234832] text-slate-400 hover:text-red-500 hover:border-red-200 dark:hover:text-red-400 dark:hover:border-red-900 transition-colors" title="Delete Card">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</div>
+<div class="relative w-full sm:w-48 bg-gray-200 dark:bg-[#1a2e25] flex items-center justify-center p-6 sm:p-0 overflow-hidden grayscale">
+<div class="relative z-10 w-full sm:w-auto h-48 sm:h-full flex flex-col justify-center items-center sm:items-start p-4 text-slate-400 dark:text-white/30">
+<div class="w-12 h-8 rounded bg-gray-400/50 mb-4"></div>
+<span class="font-mono text-lg opacity-50 select-none">VIRTUAL</span>
+</div>
+</div>
+</div>
+<!-- Add New Placeholder for Operator (Secondary visual cue) -->
+<button class="group flex flex-col items-center justify-center min-h-[300px] rounded-[2rem] border-2 border-dashed border-gray-300 dark:border-[#234832] hover:border-primary dark:hover:border-primary bg-transparent text-slate-400 dark:text-text-secondary hover:text-primary dark:hover:text-primary transition-all gap-4">
+<div class="flex items-center justify-center w-16 h-16 rounded-full bg-gray-100 dark:bg-[#193324] group-hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-4xl group-hover:scale-110 transition-transform">add</span>
+</div>
+<span class="font-medium text-lg">Issue another card</span>
+</button>
+</section>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: "Spline Sans", sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #102217;
+}
+::-webkit-scrollbar-thumb {
+  background: #234832;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2bee79;
+}
+
+.glass-card {
+  background: rgba(21, 42, 31, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(43, 238, 121, 0.05);
+}
+

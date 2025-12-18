@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Spring Bank - Accounts</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<!-- Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2bee79",
+                        "primary-dark": "#1fa855",
+                        "background-light": "#f6f8f7",
+                        "background-dark": "#102217",
+                        "surface-dark": "#1c3226",
+                        "surface-light": "#ffffff",
+                        "text-muted-dark": "#92c9a8",
+                        "text-muted-light": "#64748b",
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: "Spline Sans", "Noto Sans", sans-serif;
+        }
+        /* Custom scrollbar for better look in dark mode */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: rgba(146, 201, 168, 0.2);
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen text-slate-900 dark:text-white overflow-hidden transition-colors duration-200">
+<div class="flex h-screen w-full">
+<!-- Side Navigation -->
+<aside class="hidden lg:flex w-72 flex-col justify-between border-r border-gray-200 dark:border-[#234832] bg-surface-light dark:bg-[#112218] p-4 transition-colors duration-200">
+<div class="flex flex-col gap-8">
+<!-- Brand -->
+<div class="flex items-center gap-3 px-2">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 shrink-0" data-alt="Abstract green geometric logo representing growth and security" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCg8oaIClSYkC2FwfkNhWWWxxyZlj-1jHFArJl_yveDU7_DsZUSLM3BT95YuRYRTQMT-7_m5ISp2Z7mzw3omypF99SljW66TsjdF0P9fayS6PW3ddXvDtCeZtaxAfajMLl2IeHS3WNNq9cKMj2e8o5qBe1wtzXoUZrZf3yUGS3ZP0Ea7ro8Z9v0HTK6FmXyIDHIjiWEUnCafHuyYw7nxxhibux5tJ5Zt0CBH_vmmPSxoC7SMQtnd7AKTMHRnLksxpJf0zTHwQ9v-Eo");'></div>
+<h1 class="text-xl font-bold tracking-tight">Spring Bank</h1>
+</div>
+<!-- Nav Menu -->
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-full hover:bg-gray-100 dark:hover:bg-[#1c3226] text-gray-600 dark:text-text-muted-dark transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">dashboard</span>
+<span class="font-medium">Dashboard</span>
+</a>
+<!-- Active State -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-full bg-primary/10 dark:bg-[#234832] text-primary-dark dark:text-white transition-all" href="#">
+<span class="material-symbols-outlined fill-1">account_balance_wallet</span>
+<span class="font-medium">Accounts</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-full hover:bg-gray-100 dark:hover:bg-[#1c3226] text-gray-600 dark:text-text-muted-dark transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">swap_horiz</span>
+<span class="font-medium">Transfers</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-full hover:bg-gray-100 dark:hover:bg-[#1c3226] text-gray-600 dark:text-text-muted-dark transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">description</span>
+<span class="font-medium">Statements</span>
+</a>
+</nav>
+</div>
+<!-- Profile / Bottom -->
+<div class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-full hover:bg-gray-100 dark:hover:bg-[#1c3226] text-gray-600 dark:text-text-muted-dark transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">person</span>
+<span class="font-medium">Profile</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-full hover:bg-gray-100 dark:hover:bg-[#1c3226] text-gray-600 dark:text-text-muted-dark transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">settings</span>
+<span class="font-medium">Settings</span>
+</a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-full overflow-hidden relative">
+<!-- Top Header & Actions -->
+<header class="w-full px-6 py-8 md:px-12 flex flex-col md:flex-row md:items-end justify-between gap-6 shrink-0 z-10">
+<div class="flex flex-col gap-2">
+<h2 class="text-4xl font-black leading-tight tracking-[-0.033em]">Accounts</h2>
+<p class="text-text-muted-light dark:text-text-muted-dark text-base font-normal">Manage your banking portfolios and balances</p>
+</div>
+<!-- Create Button (Operator Role) -->
+<button class="flex items-center justify-center gap-2 bg-primary hover:bg-[#25d36b] text-[#112218] h-12 px-6 rounded-full font-bold shadow-lg shadow-primary/20 transition-all hover:scale-105 active:scale-95">
+<span class="material-symbols-outlined text-[20px]">add_circle</span>
+<span>Create New Account</span>
+</button>
+</header>
+<!-- Scrollable Content Area -->
+<div class="flex-1 overflow-y-auto px-6 md:px-12 pb-12">
+<!-- Search and Filter Bar -->
+<div class="flex flex-col xl:flex-row gap-4 mb-8">
+<!-- Search -->
+<div class="flex-1 min-w-[300px] max-w-2xl">
+<label class="flex w-full items-center rounded-xl h-12 bg-white dark:bg-[#234832] shadow-sm border border-gray-100 dark:border-none overflow-hidden focus-within:ring-2 focus-within:ring-primary transition-all">
+<div class="pl-4 pr-2 text-gray-400 dark:text-[#92c9a8]">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="w-full bg-transparent border-none text-base text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-[#92c9a8] focus:ring-0 h-full" placeholder="Search by account number or alias..."/>
+</label>
+</div>
+<!-- Filter Chips -->
+<div class="flex gap-2 overflow-x-auto pb-2 xl:pb-0 no-scrollbar items-center">
+<button class="whitespace-nowrap h-10 px-5 rounded-full bg-gray-900 dark:bg-white text-white dark:text-[#112218] font-medium text-sm transition-colors">
+                            All Accounts
+                        </button>
+<button class="whitespace-nowrap h-10 px-5 rounded-full bg-white dark:bg-[#234832] border border-gray-200 dark:border-transparent text-gray-600 dark:text-white font-medium text-sm hover:bg-gray-50 dark:hover:bg-[#2c553d] transition-colors">
+                            Checking
+                        </button>
+<button class="whitespace-nowrap h-10 px-5 rounded-full bg-white dark:bg-[#234832] border border-gray-200 dark:border-transparent text-gray-600 dark:text-white font-medium text-sm hover:bg-gray-50 dark:hover:bg-[#2c553d] transition-colors">
+                            Savings
+                        </button>
+<button class="whitespace-nowrap h-10 px-5 rounded-full bg-white dark:bg-[#234832] border border-gray-200 dark:border-transparent text-gray-600 dark:text-white font-medium text-sm hover:bg-gray-50 dark:hover:bg-[#2c553d] transition-colors">
+                            Business
+                        </button>
+</div>
+</div>
+<!-- Accounts List -->
+<div class="flex flex-col gap-4">
+<!-- Table Header (Hidden on small screens) -->
+<div class="hidden md:grid grid-cols-12 gap-4 px-6 py-2 text-sm font-medium text-gray-500 dark:text-[#92c9a8] uppercase tracking-wider">
+<div class="col-span-4">Account Details</div>
+<div class="col-span-3">Account Number</div>
+<div class="col-span-3 text-right">Balance</div>
+<div class="col-span-2 text-center">Status</div>
+</div>
+<!-- Account Card 1: Checking (Active) -->
+<div class="group flex flex-col md:grid md:grid-cols-12 gap-4 items-center p-5 bg-white dark:bg-[#1c3226] rounded-2xl shadow-sm border border-gray-100 dark:border-[#234832] hover:shadow-md transition-all">
+<!-- Details -->
+<div class="col-span-4 flex items-center gap-4 w-full">
+<div class="flex items-center justify-center size-12 rounded-full bg-blue-50 dark:bg-blue-500/20 text-blue-600 dark:text-blue-300">
+<span class="material-symbols-outlined">account_balance</span>
+</div>
+<div class="flex flex-col">
+<span class="font-bold text-lg text-gray-900 dark:text-white">Premium Checking</span>
+<span class="text-sm text-gray-500 dark:text-gray-400">Personal Account</span>
+</div>
+</div>
+<!-- Number -->
+<div class="col-span-3 w-full flex items-center justify-between md:justify-start gap-3">
+<span class="md:hidden text-sm text-gray-500">Account No:</span>
+<div class="font-mono text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-[#112218] px-3 py-1 rounded-lg">
+                                •••• 4589
+                            </div>
+<button class="text-gray-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg">visibility</span>
+</button>
+</div>
+<!-- Balance -->
+<div class="col-span-3 w-full flex md:block items-center justify-between md:text-right">
+<span class="md:hidden text-sm text-gray-500">Balance:</span>
+<span class="font-display font-bold text-xl text-gray-900 dark:text-white">$14,250.00</span>
+</div>
+<!-- Status & Action -->
+<div class="col-span-2 w-full flex justify-between md:justify-center items-center gap-4">
+<span class="md:hidden text-sm text-gray-500">Status:</span>
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 dark:bg-[#112218] border border-emerald-200 dark:border-[#234832]">
+<div class="size-2 rounded-full bg-emerald-500 animate-pulse"></div>
+<span class="text-xs font-bold text-emerald-700 dark:text-primary uppercase tracking-wide">Active</span>
+</div>
+<button class="md:hidden opacity-0 group-hover:opacity-100 transition-opacity p-2 hover:bg-gray-100 dark:hover:bg-[#234832] rounded-full">
+<span class="material-symbols-outlined text-gray-500">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Account Card 2: Savings (Active) -->
+<div class="group flex flex-col md:grid md:grid-cols-12 gap-4 items-center p-5 bg-white dark:bg-[#1c3226] rounded-2xl shadow-sm border border-gray-100 dark:border-[#234832] hover:shadow-md transition-all">
+<div class="col-span-4 flex items-center gap-4 w-full">
+<div class="flex items-center justify-center size-12 rounded-full bg-purple-50 dark:bg-purple-500/20 text-purple-600 dark:text-purple-300">
+<span class="material-symbols-outlined">savings</span>
+</div>
+<div class="flex flex-col">
+<span class="font-bold text-lg text-gray-900 dark:text-white">High Yield Savings</span>
+<span class="text-sm text-gray-500 dark:text-gray-400">Savings Account</span>
+</div>
+</div>
+<div class="col-span-3 w-full flex items-center justify-between md:justify-start gap-3">
+<span class="md:hidden text-sm text-gray-500">Account No:</span>
+<div class="font-mono text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-[#112218] px-3 py-1 rounded-lg">
+                                •••• 9921
+                            </div>
+<button class="text-gray-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg">visibility</span>
+</button>
+</div>
+<div class="col-span-3 w-full flex md:block items-center justify-between md:text-right">
+<span class="md:hidden text-sm text-gray-500">Balance:</span>
+<span class="font-display font-bold text-xl text-gray-900 dark:text-white">$2,500.00</span>
+</div>
+<div class="col-span-2 w-full flex justify-between md:justify-center items-center gap-4">
+<span class="md:hidden text-sm text-gray-500">Status:</span>
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 dark:bg-[#112218] border border-emerald-200 dark:border-[#234832]">
+<div class="size-2 rounded-full bg-emerald-500"></div>
+<span class="text-xs font-bold text-emerald-700 dark:text-primary uppercase tracking-wide">Active</span>
+</div>
+</div>
+</div>
+<!-- Account Card 3: Business (Inactive) -->
+<div class="group flex flex-col md:grid md:grid-cols-12 gap-4 items-center p-5 bg-gray-50 dark:bg-[#162920] rounded-2xl shadow-none border border-gray-100 dark:border-[#234832] opacity-80 hover:opacity-100 transition-all">
+<div class="col-span-4 flex items-center gap-4 w-full">
+<div class="flex items-center justify-center size-12 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400">
+<span class="material-symbols-outlined">store</span>
+</div>
+<div class="flex flex-col">
+<span class="font-bold text-lg text-gray-700 dark:text-gray-300">Legacy Business</span>
+<span class="text-sm text-gray-500 dark:text-gray-500">Business Account</span>
+</div>
+</div>
+<div class="col-span-3 w-full flex items-center justify-between md:justify-start gap-3">
+<span class="md:hidden text-sm text-gray-500">Account No:</span>
+<div class="font-mono text-gray-500 dark:text-gray-500 bg-gray-200 dark:bg-[#112218] px-3 py-1 rounded-lg">
+                                •••• 1102
+                            </div>
+<button class="text-gray-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg">visibility_off</span>
+</button>
+</div>
+<div class="col-span-3 w-full flex md:block items-center justify-between md:text-right">
+<span class="md:hidden text-sm text-gray-500">Balance:</span>
+<span class="font-display font-bold text-xl text-gray-500 dark:text-gray-400">$0.00</span>
+</div>
+<div class="col-span-2 w-full flex justify-between md:justify-center items-center gap-4">
+<span class="md:hidden text-sm text-gray-500">Status:</span>
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gray-200 dark:bg-[#232323] border border-gray-300 dark:border-gray-700">
+<div class="size-2 rounded-full bg-gray-500"></div>
+<span class="text-xs font-bold text-gray-600 dark:text-gray-400 uppercase tracking-wide">Inactive</span>
+</div>
+</div>
+</div>
+<!-- Account Card 4: Investment (Active) -->
+<div class="group flex flex-col md:grid md:grid-cols-12 gap-4 items-center p-5 bg-white dark:bg-[#1c3226] rounded-2xl shadow-sm border border-gray-100 dark:border-[#234832] hover:shadow-md transition-all">
+<div class="col-span-4 flex items-center gap-4 w-full">
+<div class="flex items-center justify-center size-12 rounded-full bg-amber-50 dark:bg-amber-500/20 text-amber-600 dark:text-amber-300">
+<span class="material-symbols-outlined">trending_up</span>
+</div>
+<div class="flex flex-col">
+<span class="font-bold text-lg text-gray-900 dark:text-white">Growth Portfolio</span>
+<span class="text-sm text-gray-500 dark:text-gray-400">Investment Account</span>
+</div>
+</div>
+<div class="col-span-3 w-full flex items-center justify-between md:justify-start gap-3">
+<span class="md:hidden text-sm text-gray-500">Account No:</span>
+<div class="font-mono text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-[#112218] px-3 py-1 rounded-lg">
+                                •••• 6722
+                            </div>
+<button class="text-gray-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg">visibility</span>
+</button>
+</div>
+<div class="col-span-3 w-full flex md:block items-center justify-between md:text-right">
+<span class="md:hidden text-sm text-gray-500">Balance:</span>
+<span class="font-display font-bold text-xl text-gray-900 dark:text-white">$45,890.50</span>
+</div>
+<div class="col-span-2 w-full flex justify-between md:justify-center items-center gap-4">
+<span class="md:hidden text-sm text-gray-500">Status:</span>
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 dark:bg-[#112218] border border-emerald-200 dark:border-[#234832]">
+<div class="size-2 rounded-full bg-emerald-500"></div>
+<span class="text-xs font-bold text-emerald-700 dark:text-primary uppercase tracking-wide">Active</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Pagination -->
+<div class="flex items-center justify-between mt-8">
+<p class="text-sm text-gray-500 dark:text-[#92c9a8]">Showing 1-4 of 12 accounts</p>
+<div class="flex gap-2">
+<button class="flex items-center justify-center size-10 rounded-full border border-gray-200 dark:border-[#234832] bg-white dark:bg-[#1c3226] text-gray-600 dark:text-white hover:bg-gray-50 dark:hover:bg-[#234832] disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="flex items-center justify-center size-10 rounded-full border border-gray-200 dark:border-[#234832] bg-white dark:bg-[#1c3226] text-gray-600 dark:text-white hover:bg-gray-50 dark:hover:bg-[#234832]">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>
