@@ -27,10 +27,18 @@ export default function OperatorClientsPage() {
   const handleDelete = async (id: number) => {
     try {
       await clientsApi.delete(id)
-      setClients(clients.filter(c => c.id !== id))
+
+      setClients(prev =>
+        prev.map(c =>
+          c.id === id
+            ? { ...c, enabled: false }
+            : c
+        )
+      )
+
       setDeleteConfirm(null)
       setSuccess('Client deleted successfully!')
-      setTimeout(() => setSuccess(''), 3000)
+      setTimeout(() => setSuccess(''), 5000)
     } catch (err: any) {
       setError(err.message || 'Failed to delete client')
       setDeleteConfirm(null)

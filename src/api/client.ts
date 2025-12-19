@@ -41,17 +41,22 @@ class ApiClient {
     return response.json();
   }
 
-  async delete<T>(endpoint: string): Promise<T> {
+  // DELETE endpoints in our API either return no content (204)
+  // or a plain text message like "Client deleted successfully".
+  // Trying to parse that as JSON causes errors like:
+  //   Unexpected token 'C', "Client del"... is not valid JSON
+  async delete(endpoint: string): Promise<void> {
     const response = await fetch(`${API_BASE_URL}${endpoint}`, {
       method: 'DELETE',
       headers: this.getHeaders(),
     });
     if (!response.ok) {
+      // Still surface any error message from the backend
       throw new Error(await response.text());
     }
-    return response.json();
+    // We deliberately ignore the response body for DELETE
+    return;
   }
 }
 
 export const apiClient = new ApiClient();
-

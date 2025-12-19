@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
 import { cardsApi } from '../../api/cards'
 import { accountsApi } from '../../api/accounts'
-import type { CardResponse, CardCreateRequest, AccountResponse } from '../../api/types'
+import { clientsApi } from '../../api/clients'
+import type { CardResponse, CardCreateRequest, AccountResponse, ClientResponse } from '../../api/types'
 
 export default function OperatorCardsPage() {
   const [cards, setCards] = useState<CardResponse[]>([])
   const [accounts, setAccounts] = useState<AccountResponse[]>([])
+  const [clients, setClients] = useState<ClientResponse[]>([])
   const [loading, setLoading] = useState(true)
   const [showCreateModal, setShowCreateModal] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
@@ -21,12 +23,14 @@ export default function OperatorCardsPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [cardsData, accountsData] = await Promise.all([
+        const [cardsData, accountsData, clientsData] = await Promise.all([
           cardsApi.getAll(),
-          accountsApi.getAll()
+          accountsApi.getAll(),
+          clientsApi.getAll()
         ])
         setCards(cardsData)
         setAccounts(accountsData)
+        setClients(clientsData)
       } catch (error) {
         console.error('Failed to fetch data:', error)
       } finally {
@@ -43,6 +47,16 @@ export default function OperatorCardsPage() {
 
     if (!createForm.accountNumber) {
       setError('Please select an account')
+      return
+    }
+
+    const selectedAccount = accounts.find(a => a.accountNumber === createForm.accountNumber)
+    const accountOwner = selectedAccount
+      ? clients.find(c => c.username === selectedAccount.clientUsername)
+      : undefined
+
+    if (accountOwner && !accountOwner.enabled) {
+      setError('Cannot issue a card for an inactive client')
       return
     }
 
@@ -293,11 +307,17 @@ export default function OperatorCardsPage() {
                   required
                 >
                   <option value="">Select an account</option>
-                  {accounts.map((account) => (
-                    <option key={account.id} value={account.accountNumber}>
-                      {account.accountType} - ...{account.accountNumber.slice(-4)} ({account.clientUsername})
-                    </option>
-                  ))}
+                  {accounts
+                    .filter((account) =>
+                      clients.some(
+                        (client) => client.username === account.clientUsername && client.enabled
+                      )
+                    )
+                    .map((account) => (
+                      <option key={account.id} value={account.accountNumber}>
+                        {account.accountType} - ...{account.accountNumber.slice(-4)} ({account.clientUsername})
+                      </option>
+                    ))}
                 </select>
               </div>
 

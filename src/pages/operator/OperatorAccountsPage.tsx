@@ -46,6 +46,16 @@ export default function OperatorAccountsPage() {
       return
     }
 
+    const client = clients.find(c => c.id === createForm.clientId)
+    if (!client) {
+      setError('Selected client not found')
+      return
+    }
+    if (!client.enabled) {
+      setError('Cannot create an account for an inactive client')
+      return
+    }
+
     try {
       const newAccount = await accountsApi.create(createForm)
       setAccounts([...accounts, newAccount])
@@ -286,11 +296,13 @@ export default function OperatorAccountsPage() {
                   required
                 >
                   <option value={0}>Select a client</option>
-                  {clients.map((client) => (
-                    <option key={client.id} value={client.id}>
-                      {client.firstName} {client.lastName} ({client.username})
-                    </option>
-                  ))}
+                  {clients
+                    .filter((client) => client.enabled)
+                    .map((client) => (
+                      <option key={client.id} value={client.id}>
+                        {client.firstName} {client.lastName} ({client.username})
+                      </option>
+                    ))}
                 </select>
               </div>
 
