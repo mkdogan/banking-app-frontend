@@ -37,11 +37,26 @@ export default function OperatorClientsPage() {
       )
 
       setDeleteConfirm(null)
-      setSuccess('Client deleted successfully!')
+      setSuccess('Client disabled successfully!')
       setTimeout(() => setSuccess(''), 5000)
     } catch (err: any) {
-      setError(err.message || 'Failed to delete client')
+      setError(err.message || 'Failed to disable client')
       setDeleteConfirm(null)
+    }
+  }
+
+  const handleEnable = async (id: number) => {
+    setError('')
+    setSuccess('')
+    try {
+      const updated = await clientsApi.enable(id)
+      setClients(prev =>
+        prev.map(c => (c.id === id ? updated : c))
+      )
+      setSuccess('Client enabled successfully!')
+      setTimeout(() => setSuccess(''), 5000)
+    } catch (err: any) {
+      setError(err.message || 'Failed to enable client')
     }
   }
 
@@ -190,28 +205,38 @@ export default function OperatorClientsPage() {
                         </span>
                       </td>
                       <td className="p-4 text-center">
-                        {deleteConfirm === client.id ? (
-                          <div className="flex items-center gap-2 justify-center">
+                        {client.enabled ? (
+                          deleteConfirm === client.id ? (
+                            <div className="flex items-center gap-2 justify-center">
+                              <button
+                                onClick={() => handleDelete(client.id)}
+                                className="px-3 py-1.5 bg-red-500 hover:bg-red-600 text-white rounded-lg text-xs font-medium transition-colors"
+                              >
+                                Confirm
+                              </button>
+                              <button
+                                onClick={() => setDeleteConfirm(null)}
+                                className="px-3 py-1.5 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 rounded-lg text-xs font-medium hover:bg-slate-50 dark:hover bg-slate-700 transition-colors"
+                              >
+                                Cancel
+                              </button>
+                            </div>
+                          ) : (
                             <button
-                              onClick={() => handleDelete(client.id)}
-                              className="px-3 py-1.5 bg-red-500 hover:bg-red-600 text-white rounded-lg text-xs font-medium transition-colors"
+                              onClick={() => setDeleteConfirm(client.id)}
+                              className="text-red-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 p-1.5 rounded-full transition-all"
+                              title="Disable Client"
                             >
-                              Confirm
+                              <span className="material-symbols-outlined text-xl">block</span>
                             </button>
-                            <button
-                              onClick={() => setDeleteConfirm(null)}
-                              className="px-3 py-1.5 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 rounded-lg text-xs font-medium hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
-                            >
-                              Cancel
-                            </button>
-                          </div>
+                          )
                         ) : (
                           <button
-                            onClick={() => setDeleteConfirm(client.id)}
-                            className="text-red-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 p-1.5 rounded-full transition-all"
-                            title="Delete Client"
+                            onClick={() => handleEnable(client.id)}
+                            className="text-green-400 hover:text-green-600 hover:bg-green-50 dark:hover:bg-green-900/20 px-3 py-1.5 rounded-full text-xs font-medium transition-all"
+                            title="Enable Client"
                           >
-                            <span className="material-symbols-outlined text-xl">delete</span>
+                            Enable
                           </button>
                         )}
                       </td>

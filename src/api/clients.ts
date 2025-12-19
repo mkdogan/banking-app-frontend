@@ -14,8 +14,12 @@ export const clientsApi = {
   getMe: (): Promise<ClientResponse> =>
     apiClient.get('/clients/me'),
 
-  // Admin: delete client
+  // Admin: soft-delete (disable) client
   delete: (id: number): Promise<void> =>
     apiClient.delete(`/clients/${id}`),
+
+  // Admin: re-enable client (and cascade enable accounts/cards)
+  enable: (id: number): Promise<ClientResponse> =>
+    apiClient.post<ClientResponse>(`/clients/${id}/enable`),
 };
 
