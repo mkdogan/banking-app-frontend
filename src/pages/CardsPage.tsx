@@ -123,7 +123,7 @@ export default function CardsPage() {
                   <div className="relative z-10 w-full sm:w-auto h-48 sm:h-full flex flex-col justify-center items-center sm:items-start p-4 text-white/80">
                     <div className="w-12 h-8 rounded bg-gradient-to-br from-yellow-200 to-yellow-600 mb-4 shadow-inner"></div>
                     <span className="font-mono text-lg opacity-50 select-none">
-                      {card.cardType === 'CREDIT' ? 'TROY' : 'DEBIT'}
+                      {'TROY'}
                     </span>
                   </div>
                 </div>

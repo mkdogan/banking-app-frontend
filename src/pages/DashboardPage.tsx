@@ -160,7 +160,7 @@ export default function DashboardPage() {
                     <span className="text-white font-bold tracking-wide uppercase">{cards[0].cardType}</span>
                   </div>
                   <div className="flex flex-col items-end">
-                    <span className="text-white font-black italic text-xl">{cards[0].cardType === 'CREDIT' ? 'TROY' : 'DEBIT'}</span>
+                    <span className="text-white font-black italic text-xl">TROY</span>
                     <span className="text-[10px] text-white/60 font-bold">{cards[0].status}</span>
                   </div>
                 </div>
